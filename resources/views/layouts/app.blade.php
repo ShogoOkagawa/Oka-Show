@@ -45,11 +45,12 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('ログイン') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('新規登録') }}</a>
+                                    <!-- <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a> -->
                                 </li>
                             @endif
                         @else
@@ -62,7 +63,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('ログアウト') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -91,9 +92,9 @@
                 @foreach($tags AS $tag)
                     <a href="/?tag={{ $tag['name'] }}" class="d-block">{{ $tag['name'] }}</a>
                 @endforeach
-            　</div>
+                </div>
               </div>
-        　　</div>
+        </div>
             <div class="col-md-4 p-0">
               <div class="card h-100">
                 <div class="card-header d-flex">メモ一覧 <a class='ml-auto' href='/create'><i class="fas fa-plus-circle"></i></a></div>
