@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Memo;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = \Auth::user();
+        // メモ一覧を表示
+        $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
+        // dd($memos);
+        return view('home',compact('user', 'memos'));
     }
 
     /**
@@ -34,5 +39,25 @@ class HomeController extends Controller
         // ログインしているユーザー情報をVIEWで渡す
         $user = \Auth::user();
         return view('create', compact('user'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        // dd($data);
+        // POSTされたデータをDB（memosテーブル）に挿入
+        // MEMOモデルにDBへ保存する命令を出す
+
+        // タグIDをmemosテーブルに入れてあげる
+        $memo_id = Memo::insertGetId(
+            [
+             'content' => $data['content'],
+             'user_id' => $data['user_id'], 
+             'status' => 1
+            ]
+        );
+        
+        // リダイレクト処理
+        return redirect()->route('home');
     }
 }
